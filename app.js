@@ -11,9 +11,9 @@ const passportLocalMongoose = require('passport-local-mongoose');
 const moment = require('moment');
 
 
-const homeStartingContent = "Lacus vel facilisis volutpat est velit egestas dui id ornare. Semper auctor neque vitae tempus quam. Sit amet cursus sit amet dictum sit amet justo. Viverra tellus in hac habitasse. Imperdiet proin fermentum leo vel orci porta. Donec ultrices tincidunt arcu non sodales neque sodales ut. Mattis molestie a iaculis at erat pellentesque adipiscing. Magnis dis parturient montes nascetur ridiculus mus mauris vitae ultricies. Adipiscing elit ut aliquam purus sit amet luctus venenatis lectus. Ultrices vitae auctor eu augue ut lectus arcu bibendum at. Odio euismod lacinia at quis risus sed vulputate odio ut. Cursus mattis molestie a iaculis at erat pellentesque adipiscing.";
-const aboutContent = "Hac habitasse platea dictumst vestibulum rhoncus est pellentesque. Dictumst vestibulum rhoncus est pellentesque elit ullamcorper. Non diam phasellus vestibulum lorem sed. Platea dictumst quisque sagittis purus sit. Egestas sed sed risus pretium quam vulputate dignissim suspendisse. Mauris in aliquam sem fringilla. Semper risus in hendrerit gravida rutrum quisque non tellus orci. Amet massa vitae tortor condimentum lacinia quis vel eros. Enim ut tellus elementum sagittis vitae. Mauris ultrices eros in cursus turpis massa tincidunt dui.";
-const contactContent = "Scelerisque eleifend donec pretium vulputate sapien. Rhoncus urna neque viverra justo nec ultrices. Arcu dui vivamus arcu felis bibendum. Consectetur adipiscing elit duis tristique. Risus viverra adipiscing at in tellus integer feugiat. Sapien nec sagittis aliquam malesuada bibendum arcu vitae. Consequat interdum varius sit amet mattis. Iaculis nunc sed augue lacus. Interdum posuere lorem ipsum dolor sit amet consectetur adipiscing elit. Pulvinar elementum integer enim neque. Ultrices gravida dictum fusce ut placerat orci nulla. Mauris in aliquam sem fringilla ut morbi tincidunt. Tortor posuere ac ut consequat semper viverra nam libero.";
+const homeStartingContent = "This is a very simple blog website, which I created. It's not the point to have a blog or about writing. I built this site and I would appreciate if you could write a kind of review about the site or anything because it's still a blog so all posts are welcome. Basically I am asking help to test the site functioning. It's a milestone on my journey to become a webdeveloper. Also if you might be a coder/programmer I hope you could take look at the code on GitHub, the link is in the contacts.";
+const aboutContent = "The base of the site it's from udemy where I follow Angela Yu's webdeveloper course. But I started to add my own part. I used NodeJS with express and MongoDB for the database with mongoose package. I tried to cover CRUD operation. EJS tamplate to views... Passport for authentication.";
+const contactContent = "This is the link to the GitHub repository of the page. I am sure my code is a mess if you can give me advises or how to get better and cleaner code I would apprecite that Thank You";
 
 const app = express();
 
@@ -36,7 +36,7 @@ mongoose.set('useCreateIndex', true);
 
 let date = new Date();
 let formatedDate = moment(date).format("DD-MM-YYYY");
-console.log(formatedDate);
+
 
 const postSchema = new mongoose.Schema ({
   title: String,
@@ -141,6 +141,11 @@ app.route("/mypost/:postId")
   });
 });
 
+app.get("/publicprofile/:username" , function(req , res){
+  Post.find({username:req.params.username} , function(err , posts){
+    res.render("publicprofile" , { posts: posts});
+  });
+});
 
 app.route("/update/:postId")
 .get(function(req , res){

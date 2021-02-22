@@ -40,6 +40,12 @@
   color: #7c9473;
 }
 
+#usernamelink{
+  text-decoration: none;
+}
+#usernamelink:hover{
+  text-decoration: underline;
+}
 .logo{
   display: flex;
   align-items: center;
