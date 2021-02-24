@@ -31,7 +31,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-mongoose.connect("mongodb://localhost:27017/blogDB", {useNewUrlParser: true , useUnifiedTopology: true });
+mongoose.connect("mongodb+srv://admin-agi:test00@cluster0.de7lp.mongodb.net/blogDB?retryWrites=true&w=majority", {useNewUrlParser: true , useUnifiedTopology: true });
 mongoose.set('useCreateIndex', true);
 
 let date = new Date();
@@ -219,7 +219,6 @@ app.post("/login", function(req , res){
     passport.authenticate("local")(req, res, function(){
     var logedInUser = req.body.username
     res.redirect("/");
-    console.log(logedInUser);
  });
 }
 });
