@@ -12,7 +12,7 @@ const moment = require('moment');
 
 
 const homeStartingContent = "This is a very simple blog website, which I created. It's not the point to have a blog or about writing. I built this site and I would appreciate if you could write a kind of review about the site or anything because it's still a blog so all posts are welcome. Basically I am asking help to test the site functioning. It's a milestone on my journey to become a webdeveloper. Also if you might be a coder/programmer I hope you could take look at the code on GitHub, the link is in the contacts.";
-const aboutContent = "The base of the site it's from udemy where I follow Angela Yu's webdeveloper course. But I started to add my own part. I used NodeJS with express and MongoDB for the database with mongoose package. I tried to cover CRUD operation. EJS tamplate to views... Passport for authentication.";
+const aboutContent = "The base of the site it's from udemy where I follow Angela Yu's webdeveloper course. But I started to add my own part.The fornt end of this web app was coded with HTML CSS and Bootstrap. On the Back End I used NodeJS with express and MongoDB for the database with mongoose package. I tried to cover CRUD operation. EJS tamplate to views... Passport for authentication.";
 const contactContent = "This is the link to the GitHub repository of the page. I am sure my code is a mess if you can give me advises or how to get better and cleaner code I would apprecite that Thank You";
 
 const app = express();
@@ -227,9 +227,13 @@ app.post("/login", function(req , res){
 
 
 
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3000;
+}
+app.listen(port);
 
 
-
-app.listen(3000, function() {
-  console.log("Server started on port 3000");
+app.listen(port, function() {
+console.log("server has started successfully");
 });
