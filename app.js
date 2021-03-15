@@ -31,13 +31,13 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-mongoose.connect("mongodb+srv://admin-agi:test00@cluster0.de7lp.mongodb.net/blogDB?retryWrites=true&w=majority", {useNewUrlParser: true , useUnifiedTopology: true });
+mongoose.connect("mongodb://localhost:27017/secretDB", {useNewUrlParser: true , useUnifiedTopology: true });
 mongoose.set('useCreateIndex', true);
 
 let date = new Date();
 let formatedDate = moment(date).format("DD-MM-YYYY");
 
-
+let  loggedInUser = "";
 const postSchema = new mongoose.Schema ({
   title: String,
   content: String,
@@ -58,15 +58,14 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-
-
 app.get("/", function(req, res){
-Post.find({}, function(err,posts){
-   res.render("home", {
-     startingContent: homeStartingContent,
-     posts: posts
-     });
- });
+      Post.find({}, function(err,posts){
+         res.render("home", {
+           startingContent: homeStartingContent,
+           posts: posts,
+           loggedInUser: loggedInUser
+           });
+       });
 
 });
 
@@ -200,7 +199,9 @@ app.get("/register" ,function(req , res){
 
        }else{
          passport.authenticate("local")(req, res, function(){
+          loggedInUser= req.body.username
         res.redirect("/");
+
       });
     }
      });
@@ -210,14 +211,14 @@ app.get("/register" ,function(req , res){
 app.post("/login", function(req , res){
    const user = new User ({
      username: req.body.username,
-     passworr: req.body.password
+     password: req.body.password
    });
  req.login(user , function(err){
    if(err){
      console.log(err);
    }else{
     passport.authenticate("local")(req, res, function(){
-    var logedInUser = req.body.username
+     loggedInUser = req.body.username;
     res.redirect("/");
  });
 }
@@ -226,14 +227,6 @@ app.post("/login", function(req , res){
 
 
 
-
-let port = process.env.PORT;
-if (port == null || port == "") {
-  port = 3000;
-}
-app.listen(port);
-
-
-app.listen(port, function() {
-console.log("server has started successfully");
+app.listen(3000, function() {
+  console.log("Server started on port 3000");
 });
