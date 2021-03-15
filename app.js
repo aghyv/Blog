@@ -173,7 +173,14 @@ app.route("/update/:postId")
 
   app.get("/logout" , function(req ,res){
   req.logout();
-  res.redirect("/");
+  Post.find({}, function(err,posts){
+     res.render("home", {
+       startingContent: homeStartingContent,
+       posts: posts,
+       loggedInUser: false
+       });
+   });
+
   });
 
 
